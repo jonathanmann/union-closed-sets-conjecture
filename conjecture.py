@@ -46,9 +46,17 @@ def normalize_family(family_size: int) -> [[int]]:
         family.append(bitstring)
     return np.array(family)
 
+def normalize_meets_conjecture(family_size: int) -> bool:
+    normalized_family = normalize_family(family_size)
+    cx = normalized_family.sum(axis=0)/(len(normalized_family) - 1)
+    #print(cx)
+    if np.all(cx < 0.5):
+        return False
+    return True
 
 # tests to see if normalize_family works as expected
-print(normalize_family(17))
+for i in range(1,501):
+    print(i,normalize_meets_conjecture(i))
 
 # examples of the is_union_closed and meets_conjecture functions
 """
