@@ -11,6 +11,7 @@
 
 # imports type signatures 
 import typing
+import numpy as np
 
 # tests to see if a family is union closed
 def is_union_closed(family: typing.Set[typing.Set[int]]) -> bool:
@@ -35,7 +36,22 @@ def meets_conjecture(family: typing.Set[typing.Set[int]]) -> bool:
             return False
     return True
 
+def normalize_family(family_size: int) -> [[int]]:
+    family = []
+    bitstring_size = len(bin(family_size - 1)[2:])
+    for i in range(0, family_size):
+        bitstring = [*(bin(i)[2:])]
+        leading_zeros = bitstring_size - len(bitstring)
+        bitstring = [0]*leading_zeros + [int(x) for x in bitstring]
+        family.append(bitstring)
+    return np.array(family)
+
+
+# tests to see if normalize_family works as expected
+print(normalize_family(17))
+
 # examples of the is_union_closed and meets_conjecture functions
+"""
 set_family1 = [{1,2,3}, {2,3,4}, {3,4,5}, {4,5,6}]
 print(is_union_closed(set_family1))
 print(meets_conjecture(set_family1))
@@ -45,4 +61,4 @@ print(meets_conjecture(set_family2))
 set_family3 = [{1,2,3}, {2,3}, {1}]
 print(is_union_closed(set_family3))
 print(meets_conjecture(set_family3))
-
+"""
